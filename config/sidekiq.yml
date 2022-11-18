@@ -1,0 +1,4 @@
+:schedule:
+  push_line:
+    cron: '1m'
+    class: PushLineJob
