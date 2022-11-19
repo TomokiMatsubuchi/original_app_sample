@@ -5,33 +5,43 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - .tmp/db:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: 'user1'
       POSTGRES_PASSWORD: 'user1-pass'
-    restart: always
   web:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/myapp
+      - bundle_data:/usr/local/bundle
     ports:
       - "3000:3000"
     depends_on:
       - db
+      - redis
+      - sidekiq
+    environment:
+      REDIS_URL: redis://redis:6379
   redis:
       image: "redis:latest"
+      command: redis-server --appendonly yes
       ports:
         - "6379:6379"
       volumes:
-        - "./data/redis:/data"
+        - redis:/var/lib/redis/data
   sidekiq:
     build: .
     command: bundle exec sidekiq
     volumes:
-      - .:/app
-      
+      - .:/myapp
+      - bundle_data:/usr/local/bundle
     environment:
       REDIS_URL: redis://redis:6379
     depends_on:
       - redis
+      - db
+volumes:
+  bundle_data:
+  postgres:
+  redis:
