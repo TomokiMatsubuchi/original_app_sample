@@ -32,7 +32,7 @@ services:
         - redis:/var/lib/redis/data
   sidekiq:
     build: .
-    command: bundle exec sidekiq
+    command: bundle exec sidekiq 
     volumes:
       - .:/myapp
       - bundle_data:/usr/local/bundle
@@ -41,7 +41,9 @@ services:
     depends_on:
       - redis
       - db
+    tty: true
 volumes:
   bundle_data:
   postgres:
   redis:
+  sidekiq:
