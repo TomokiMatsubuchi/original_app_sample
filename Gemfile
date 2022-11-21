@@ -43,8 +43,12 @@ gem 'line-bot-api'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
+#Docker導入時に必要
 gem 'nokogiri', '1.13.1'
 gem 'mini_portile2', '~> 2.7.1'
+
+# selenium
+gem 'selenium-webdriver'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -63,7 +67,6 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
