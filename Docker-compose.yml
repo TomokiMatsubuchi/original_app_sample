@@ -24,8 +24,7 @@ services:
       - chrome
     environment:
       REDIS_URL: redis://redis:6379
-    cap_add:
-      - SYS_ADMIN # Dockerfileで作成したユーザーでchrome起動するためにcapability SYS_ADMINを追加
+      CHROME_URL: chrome://chrome:4444
   redis:
       image: "redis:latest"
       command: redis-server --appendonly yes
@@ -49,7 +48,6 @@ services:
     image: seleniarm/standalone-chromium
     ports:
       - 4444:4444
-      - 5900:5900
       - 7900:7900
     shm_size: "2gb"
     tty: true
